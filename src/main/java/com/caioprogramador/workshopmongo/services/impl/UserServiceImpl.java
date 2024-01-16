@@ -28,12 +28,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User insert(User obj) {
-        return repository.insert(obj);
+    public User insert(UserDTO obj) {
+        return repository.insert(fromDTO(obj));
     }
 
     @Override
-    public User fromDTO(UserDTO userDTO){
+    public void delete(String id) {
+        findById(id);
+        repository.deleteById(id);
+    }
+
+    @Override
+    public User update(UserDTO obj) {
+        User newObj = repository.findById(obj.getId())
+                .orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+        updateData(newObj,obj);
+        return repository.save(newObj);
+    }
+
+    private void updateData(User newObj, UserDTO obj) {
+        newObj.setName(obj.getName());
+        newObj.setEmail(obj.getEmail());
+    }
+
+    private User fromDTO(UserDTO userDTO){
         return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
     }
 }
