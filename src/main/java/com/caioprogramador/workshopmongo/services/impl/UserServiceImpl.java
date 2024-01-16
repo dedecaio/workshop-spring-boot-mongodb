@@ -1,5 +1,6 @@
 package com.caioprogramador.workshopmongo.services.impl;
 
+import com.caioprogramador.workshopmongo.dto.UserDTO;
 import com.caioprogramador.workshopmongo.entity.User;
 import com.caioprogramador.workshopmongo.repository.UserRepository;
 import com.caioprogramador.workshopmongo.services.UserService;
@@ -24,5 +25,15 @@ public class UserServiceImpl implements UserService {
         User user = repository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
         return user;
+    }
+
+    @Override
+    public User insert(User obj) {
+        return repository.insert(obj);
+    }
+
+    @Override
+    public User fromDTO(UserDTO userDTO){
+        return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
     }
 }
