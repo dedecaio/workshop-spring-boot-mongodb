@@ -1,5 +1,6 @@
 package com.caioprogramador.workshopmongo.resources;
 
+import com.caioprogramador.workshopmongo.dto.UserDTO;
 import com.caioprogramador.workshopmongo.entity.User;
 import com.caioprogramador.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,9 @@ public class UserResource {
     private UserService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
+    public ResponseEntity<List<UserDTO>> findAll(){
         List<User> list = service.findAll();
-        return ResponseEntity.ok(list);
+        List<UserDTO> listDto = list.stream().map(UserDTO::new).toList();
+        return ResponseEntity.ok(listDto);
     }
 }
