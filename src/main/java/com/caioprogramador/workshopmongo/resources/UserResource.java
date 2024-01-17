@@ -1,6 +1,7 @@
 package com.caioprogramador.workshopmongo.resources;
 
 import com.caioprogramador.workshopmongo.dto.UserDTO;
+import com.caioprogramador.workshopmongo.entity.Post;
 import com.caioprogramador.workshopmongo.entity.User;
 import com.caioprogramador.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -52,5 +52,11 @@ public class UserResource {
         userDTO.setId(id);
         User user = service.update(userDTO);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        User obj = service.findById(id);
+        return ResponseEntity.ok(obj.getPosts());
     }
 }
