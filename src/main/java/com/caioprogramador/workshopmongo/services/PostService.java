@@ -10,4 +10,5 @@ public interface PostService {
     Post insert(Post post);
     void update(Post post);
     void delete(String id);
+    List<Post> findByTitle(String text);
 }

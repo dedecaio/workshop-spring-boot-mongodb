@@ -51,4 +51,9 @@ public class PostServiceImpl implements PostService {
         findById(id);
         repository.deleteById(id);
     }
+
+    @Override
+    public List<Post> findByTitle(String text) {
+        return repository.findByTitleContainingIgnoreCase(text);
+    }
 }
